@@ -1,0 +1,10 @@
+kumuluzee:
+  name: Filme
+  version: 1.0.0
+  env:
+    name: dev
+  datasources:
+    - jndi-name: jdbc/PriporocilaDS
+      connection-url: jdbc:postgresql://localhost:5432/filme
+      username: postgres
+      password: postgres
