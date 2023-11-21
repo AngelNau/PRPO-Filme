@@ -1,6 +1,6 @@
 package si.fri.prpo.samostojno.servleti;
 
-import si.fri.prpo.samostojno.FilmiZrno;
+import si.fri.prpo.samostojno.zrna.FilmiZrno;
 import si.fri.prpo.samostojno.entitete.Film;
 
 import javax.inject.Inject;
@@ -21,7 +21,6 @@ public class JPAServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         List<Film> filmi = filmiZrno.getFilmi();
 
         // izpis filmov na spletno stran
@@ -29,6 +28,6 @@ public class JPAServlet extends HttpServlet {
 
         // izpis vseh uporabnikov
         writer.append("Seznam obstojecih filmov:\n");
-        filmi.stream().forEach(f -> writer.append(f.toString() + "\n"));
+        filmi.forEach(f -> writer.append(f.toString()).append("\n"));
     }
 }

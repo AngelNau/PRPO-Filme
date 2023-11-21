@@ -22,4 +22,12 @@ public class Zanr {
     public String getIme() {
         return ime;
     }
+
+    public Integer getId() {
+        return zanr_id;
+    }
+
+    public void setIme(String Ime) {
+        this.ime = Ime;
+    }
 }

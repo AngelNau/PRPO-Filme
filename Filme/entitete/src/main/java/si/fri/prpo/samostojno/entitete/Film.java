@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 @NamedQueries(value =
     {
             @NamedQuery(name = "Film.getAll", query = "SELECT f FROM film f"),
-            @NamedQuery(name = "Film.getName", query = "SELECT f.ime FROM film f WHERE f.id = :id"),
+            @NamedQuery(name = "Film.removeFilm", query = "DELETE FROM film f WHERE f.id = :id"),
             @NamedQuery(name = "Film.getFilm", query = "SELECT f FROM film f WHERE f.id = :id")
     })
 public class Film {
@@ -28,6 +28,43 @@ public class Film {
     @ManyToOne
     @JoinColumn(name = "zanr_id")
     private Zanr zanr;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getIme() {
+        return ime;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public Zanr getZanr() {
+        return zanr;
+    }
+
+    public void setIme(String ime) {
+        this.ime = ime;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
+
+    public void setZanr(Zanr zanr) {
+        this.zanr = zanr;
+    }
+
     @Override
     public String toString() {
         String str = "Ime " +
