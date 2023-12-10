@@ -39,6 +39,18 @@
                 <version>${postgresql.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-json-p-jsonp</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-json-b-yasson</artifactId>
+            </dependency>
+            <dependency>
                 <groupId>si.fri.prpo.samostojno</groupId>
                 <artifactId>api</artifactId>
                 <version>${project.version}</version>

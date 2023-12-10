@@ -58,4 +58,17 @@ public class Uporabnik {
     public void setStarost(Integer starost) {
         this.starost = starost;
     }
+
+    @Override
+    public String toString() {
+        String str = "Ime " +
+                this.ime +
+                " Priimek: " +
+                this.priimek +
+                " Email: " +
+                this.email +
+                " Starost: " +
+                this.starost;
+        return str;
+    }
 }
