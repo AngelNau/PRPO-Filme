@@ -1,16 +1,15 @@
 package si.fri.prpo.samostojno.zrna;
 
 import si.fri.prpo.samostojno.entitete.Film;
-import si.fri.prpo.samostojno.entitete.Zanr;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
+import com.kumuluz.ee.rest.utils.JPAUtils;
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,6 +25,14 @@ public class FilmiZrno {
         return query.getResultList();
     }
 
+    public List<Film> getFilmi(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Film.class, query);
+    }
+
+    public Long getNumFilmi(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Film.class, query);
+    }
+
     public Film getFilm(int id) {
         TypedQuery<Film> query = em.createNamedQuery("Film.getFilm", Film.class);
         query.setParameter("id", id);
@@ -37,7 +44,7 @@ public class FilmiZrno {
         try {
             em.persist(film);
         } catch(Exception e) {
-            log.severe(e.toString() + " Couldn't create Film.");
+            log.severe(e + " Couldn't create Film.");
         }
     }
 

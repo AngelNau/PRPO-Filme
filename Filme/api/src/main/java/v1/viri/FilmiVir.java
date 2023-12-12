@@ -1,27 +1,34 @@
 package v1.viri;
 
-import si.fri.prpo.samostojno.entitete.Film;
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.samostojno.zrna.FilmiZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import javax.ws.rs.core.UriInfo;
 
 @Path("filmi")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class FilmiVir {
+    @Context
+    protected UriInfo uriInfo;
     @Inject
     private FilmiZrno filmiZrno;
 
     @GET
     public Response getFilms() {
-        List<Film> films = filmiZrno.getFilmi();
-        return Response.status(Response.Status.OK).entity(films).build();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        Long numFilms = filmiZrno.getNumFilmi(query);
+        return Response
+                .ok(filmiZrno.getFilmi(query))
+                .header("X-Total-Count", numFilms)
+                .build();
     }
 
     @GET

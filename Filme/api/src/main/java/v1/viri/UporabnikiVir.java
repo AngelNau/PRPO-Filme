@@ -1,28 +1,34 @@
 package v1.viri;
 
-import si.fri.prpo.samostojno.entitete.Film;
-import si.fri.prpo.samostojno.zrna.UporabnikiZrno;
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.samostojno.entitete.Uporabnik;
+import si.fri.prpo.samostojno.zrna.UporabnikiZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import javax.ws.rs.core.UriInfo;
 
 @Path("uporabniki")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class UporabnikiVir {
+    @Context
+    protected UriInfo uriInfo;
     @Inject
     private UporabnikiZrno uporabnikiZrno;
-
     @GET
     public Response getUsers() {
-        List<Uporabnik> users = uporabnikiZrno.getUporabniki();
-        return Response.status(Response.Status.OK).entity(users).build();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        Long numUporabniki = uporabnikiZrno.getNumUporabniki(query);
+        return Response
+                .ok(uporabnikiZrno.getUporabniki(query))
+                .header("X-Total-Count", numUporabniki)
+                .build();
     }
     @GET
     @Path("{id}")

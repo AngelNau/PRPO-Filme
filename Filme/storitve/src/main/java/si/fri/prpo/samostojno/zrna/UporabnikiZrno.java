@@ -1,17 +1,23 @@
 package si.fri.prpo.samostojno.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.prpo.samostojno.entitete.Film;
 import si.fri.prpo.samostojno.entitete.Uporabnik;
+import si.fri.prpo.samostojno.izjeme.UserDoesNotExistException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
-import java.util.logging.Logger;
 
 @ApplicationScoped
 public class UporabnikiZrno {
-    private static final Logger log = Logger.getLogger(FilmiZrno.class.getName());
+    @Context
+    protected UriInfo uriInfo;
     @PersistenceContext(unitName = "priporocila-jpa")
     private EntityManager em;
 
@@ -20,9 +26,21 @@ public class UporabnikiZrno {
         return query.getResultList();
     }
 
+    public List<Uporabnik> getUporabniki(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Uporabnik.class, query);
+    }
+
+    public Long getNumUporabniki(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Film.class, query);
+    }
+
     public Uporabnik getUporabnik(int uporabnikId) {
         TypedQuery<Uporabnik> query = em.createNamedQuery("Uporabnik.getUporabnik", Uporabnik.class);
         query.setParameter("id", uporabnikId);
+        Uporabnik user = query.getSingleResult();
+        if (user == null) {
+            throw new UserDoesNotExistException("Uporabnik ne obstaja.");
+        }
         return query.getSingleResult();
     }
 }
