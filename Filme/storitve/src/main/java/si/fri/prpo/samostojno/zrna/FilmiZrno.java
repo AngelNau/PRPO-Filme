@@ -34,9 +34,13 @@ public class FilmiZrno {
     }
 
     public Film getFilm(int id) {
-        TypedQuery<Film> query = em.createNamedQuery("Film.getFilm", Film.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        try {
+            TypedQuery<Film> query = em.createNamedQuery("Film.getFilm", Film.class);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        } catch(Exception e) {
+            return null;
+        }
     }
 
     @Transactional
@@ -50,6 +54,9 @@ public class FilmiZrno {
 
     @Transactional
     public boolean changeRating(int filmId, int rating) {
+        if (rating < 0 || rating > 10) {
+            return false;
+        }
         Film film = getFilm(filmId);
         if(film != null) {
             film.setRating(rating);
@@ -59,6 +66,7 @@ public class FilmiZrno {
         return false;
     }
 
+    @Transactional
     public boolean deleteFilm(int filmId) {
         Film film = getFilm(filmId);
         if(film != null) {

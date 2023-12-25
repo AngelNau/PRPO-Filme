@@ -1,6 +1,12 @@
 package v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import si.fri.prpo.samostojno.entitete.Film;
 import si.fri.prpo.samostojno.entitete.Uporabnik;
 import si.fri.prpo.samostojno.zrna.UporabnikiZrno;
 
@@ -22,6 +28,10 @@ public class UporabnikiVir {
     @Inject
     private UporabnikiZrno uporabnikiZrno;
     @GET
+    @Operation(description = "Vrne seznam uporabnikov", summary = "Seznam uporabnikov")
+    @APIResponses({
+            @APIResponse(description = "Seznam uporabnikov", responseCode = "200", content = @Content(schema = @Schema(implementation = Uporabnik[].class)))
+    })
     public Response getUsers() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         Long numUporabniki = uporabnikiZrno.getNumUporabniki(query);
@@ -31,11 +41,23 @@ public class UporabnikiVir {
                 .build();
     }
     @GET
+    @Operation(description = "Vrne uporabnik", summary = "Uporabnik")
+    @APIResponses({
+            @APIResponse(description = "Uporabnik", responseCode = "200", content = @Content(schema = @Schema(implementation = Uporabnik.class))),
+            @APIResponse(description = "Uporabnik s tem id-jem ne obstaja!", responseCode = "404")
+    })
     @Path("{id}")
     public Response getUser(@PathParam("id") Integer id){
-        return Response
-                .status(Response.Status.CREATED)
-                .entity(uporabnikiZrno.getUporabnik(id))
-                .build();
+        try {
+            Uporabnik user = uporabnikiZrno.getUporabnik(id);
+            return Response
+                    .status(Response.Status.FOUND)
+                    .entity(user)
+                    .build();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
     }
 }

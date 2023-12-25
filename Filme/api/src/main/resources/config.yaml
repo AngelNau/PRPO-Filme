@@ -8,3 +8,10 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5432/filme
       username: postgres
       password: postgres
+      max-pool-size: 20
+  dev:
+    scan-libraries:
+      - entitete
+      - storitve
+
+zunanjiApi: https://search.imdbot.workers.dev/
