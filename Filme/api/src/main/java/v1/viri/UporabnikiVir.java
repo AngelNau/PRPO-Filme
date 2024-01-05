@@ -6,7 +6,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import si.fri.prpo.samostojno.entitete.Film;
 import si.fri.prpo.samostojno.entitete.Uporabnik;
 import si.fri.prpo.samostojno.zrna.UporabnikiZrno;
 
@@ -27,11 +26,11 @@ public class UporabnikiVir {
     protected UriInfo uriInfo;
     @Inject
     private UporabnikiZrno uporabnikiZrno;
-    @GET
     @Operation(description = "Vrne seznam uporabnikov", summary = "Seznam uporabnikov")
     @APIResponses({
             @APIResponse(description = "Seznam uporabnikov", responseCode = "200", content = @Content(schema = @Schema(implementation = Uporabnik[].class)))
     })
+    @GET
     public Response getUsers() {
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
         Long numUporabniki = uporabnikiZrno.getNumUporabniki(query);
@@ -40,12 +39,12 @@ public class UporabnikiVir {
                 .header("X-Total-Count", numUporabniki)
                 .build();
     }
-    @GET
     @Operation(description = "Vrne uporabnik", summary = "Uporabnik")
     @APIResponses({
             @APIResponse(description = "Uporabnik", responseCode = "200", content = @Content(schema = @Schema(implementation = Uporabnik.class))),
             @APIResponse(description = "Uporabnik s tem id-jem ne obstaja!", responseCode = "404")
     })
+    @GET
     @Path("{id}")
     public Response getUser(@PathParam("id") Integer id){
         try {

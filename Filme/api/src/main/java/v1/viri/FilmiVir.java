@@ -60,12 +60,12 @@ public class FilmiVir {
                 .build();
     }
 
-    @GET
     @Operation(description = "Vrne film z določen id", summary = "Film")
     @APIResponses({
             @APIResponse(description = "Film z določen id", responseCode = "200", content = @Content(schema = @Schema(implementation = Film.class))),
             @APIResponse(description = "Film s tem id-jem ne obstaja!", responseCode = "404")
     })
+    @GET
     @Path("{id}")
     public Response getFilm(@PathParam("id") Integer id) {
         Film film = filmiZrno.getFilm(id);
@@ -80,13 +80,13 @@ public class FilmiVir {
                 .build();
     }
 
-    @POST
     @Operation(description = "Spremeni rating filma", summary = "Spremeni rating")
     @APIResponses({
             @APIResponse(description = "Spremenjen rating filma!", responseCode = "200", content = @Content(schema = @Schema(implementation = Film.class))),
             @APIResponse(description = "Rating mora biti med 0 in 10!", responseCode = "400"),
             @APIResponse(description = "Film s tem id-jem ne obstaja!", responseCode = "404")
     })
+    @POST
     @Path("changeRating/{id}&{rating}")
     public Response changeRating(@PathParam("id") Integer id, @PathParam("rating") Integer rating) {
         if (rating > 10 || rating < 0) {
@@ -105,12 +105,12 @@ public class FilmiVir {
                 .build();
     }
 
-    @DELETE
     @Operation(description = "Odstrani film", summary = "Odstrani film")
     @APIResponses({
             @APIResponse(description = "Ostranjen film s tem id-jem!", responseCode = "200", content = @Content(schema = @Schema(implementation = Film.class))),
             @APIResponse(description = "Film s tem id-jem ne obstaja!", responseCode = "404")
     })
+    @DELETE
     @Path("removeFilm/{id}")
     public Response removeFilm(@PathParam("id") Integer id) {
         Film film = filmiZrno.getFilm(id);
@@ -125,12 +125,12 @@ public class FilmiVir {
                 .build();
     }
 
-    @GET
     @Operation(description = "Dobi podatke o filmu", summary = "Podatki o filmu")
     @APIResponses({
             @APIResponse(description = "Podatki o filmu", responseCode = "200", content = @Content(schema = @Schema(implementation = Film.class))),
             @APIResponse(description = "Slaba zahteva!", responseCode = "400")
     })
+    @GET
     @Path("getMovieData/{name}")
     public Response getFilmData(@PathParam("name") String name) throws ParseException {
         Response rez =  httpClient
@@ -151,5 +151,3 @@ public class FilmiVir {
         }
     }
 }
-
-
