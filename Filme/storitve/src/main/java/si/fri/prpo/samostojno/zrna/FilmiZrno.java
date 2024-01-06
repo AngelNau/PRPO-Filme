@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 @RequestScoped
 public class FilmiZrno {
     private static final Logger log = Logger.getLogger(FilmiZrno.class.getName());
-    @PersistenceContext(unitName = "priporocila-jpa")
+    @PersistenceContext(unitName = "filme-jpa")
     private EntityManager em;
 
     public List<Film> getFilmi() {

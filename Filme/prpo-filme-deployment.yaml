@@ -17,11 +17,11 @@ spec:
           name: prpo-filme
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: postgres://mfynxxrz:oC4jFUO-OFgsfbUrsrKbRBmXgAWAN_xH@drona.db.elephantsql.com/mfynxxrz #url za povezavo na bazo
+              value: postgres://mfynxxrz:TdU-DTtxH2eB5hk2DxteX2XSmzY3yDb0@drona.db.elephantsql.com/mfynxxrz #url za povezavo na bazo
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: mfynxxrz #uporabnisko ime
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
-              value: oC4jFUO-OFgsfbUrsrKbRBmXgAWAN_xH #geslo
+              value: TdU-DTtxH2eB5hk2DxteX2XSmzY3yDb0 #geslo
           ports:
             - containerPort: 8080
               name: server

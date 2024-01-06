@@ -4,7 +4,7 @@ kumuluzee:
   env:
     name: dev
   datasources:
-    - jndi-name: jdbc/PriporocilaDS
+    - jndi-name: jdbc/filmeDS
       connection-url: jdbc:postgresql://localhost:5432/filme
       username: postgres
       password: postgres

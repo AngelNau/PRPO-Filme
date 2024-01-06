@@ -18,7 +18,7 @@ import java.util.List;
 public class UporabnikiZrno {
     @Context
     protected UriInfo uriInfo;
-    @PersistenceContext(unitName = "priporocila-jpa")
+    @PersistenceContext(unitName = "filme-jpa")
     private EntityManager em;
 
     public List<Uporabnik> getUporabniki() {
